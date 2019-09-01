@@ -6,6 +6,10 @@ import (
 	"github.com/labstack/echo"
 )
 
+type simpleResponse struct {
+	Message string `json: "message"`
+}
+
 func HelloEcho(c echo.Context) error {
-	return c.String(http.StatusOK, "this api is working! Ver 1.0.0")
+	return c.JSON(http.StatusOK, simpleResponse{Message: "this api is working! Ver 1.0.0"})
 }

@@ -28,3 +28,20 @@ python -m grpc_tools.protoc -I./protos --python_out=./ml/protolib --grpc_python_
 ```
 
 Module化に伴い`XXXX_pb2_grpc`のimportを適宜修正
+
+
+### 起動
+
+```
+source ./env.sh && go run ./server/main.go 
+source ./env.sh && python3 ./ml/main.py
+```
+
+### TODO
+
+- UNIXDomainソケットってどうなの？
+- TCPよりもっと良い接続方法は?
+- 機械学習のコードを用意する。
+- 環境変数を扱えるように
+- GoRoutineを試したい
+
