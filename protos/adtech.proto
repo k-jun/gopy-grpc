@@ -1,0 +1,17 @@
+syntax = "proto3";
+package adtech;
+
+service AdTech {
+    rpc Predict(Request) returns (Response) {}
+}
+
+message Request {
+    float sepalLength = 1;
+    float sepalWidth = 2;
+    float petalLength = 3;
+    float petalWidth = 4;
+}
+
+message Response {
+    string irisType = 1;
+}
