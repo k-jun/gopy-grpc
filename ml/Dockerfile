@@ -7,4 +7,4 @@ COPY . .
 RUN pip install -r requirements.txt --upgrade
 USER nobody
 
-CMD ["python3", "main.py"]
+CMD ["python", "main.py"]

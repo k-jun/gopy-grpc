@@ -1,19 +1,27 @@
 version: '3.7'
 services:
-  ml:
+  ml_nn:
     build: ./ml
     ports:
           - 50051:50051
     environment:
       GRPC_PORT: "50051"
+      MODEL_TYPE: "nn"
+  ml_svm:
+    build: ./ml
+    ports:
+          - 50052:50052
+    environment:
+      GRPC_PORT: "50052"
+      MODEL_TYPE: "svm"
   server:
     build: ./server
     depends_on:
       - ml
     ports:
-      - 8080:8081
+      - 8080:8080
     environment:
       GRPC_PORT: "50051"
       GRPC_HOST: "ml"
-      GO_PORT: "8081"
+      GO_PORT: "8080"
   

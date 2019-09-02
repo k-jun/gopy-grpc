@@ -1,4 +1,4 @@
-# golang-server-template
+# ca-adtech-comp
 
 ```sh
 # kubernetesのversionを確認して起動

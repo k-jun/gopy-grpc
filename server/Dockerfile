@@ -13,6 +13,6 @@ EXPOSE 8080
 RUN apk update && apk upgrade && \
     apk add ca-certificates && rm -rf /var/cache/apk/*
 COPY --from=builder /server ./app/server
-# USER nobody
+USER nobody
 
 CMD ["./app/server"]
