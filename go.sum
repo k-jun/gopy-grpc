@@ -2,6 +2,7 @@ cloud.google.com/go v0.26.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMT
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190902053355-ee2aaf1a52d6 h1:QfUS14Snd+p3yAOvttbIF2jS8X7mTA4l5jjZzD+INP0=
 github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190902053355-ee2aaf1a52d6/go.mod h1:+EQwX49PvFlGRDndeJzcUCVOVo1uAGugNFsn/ll74ic=
+github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190902101153-3a75554f8ccb h1:VAEt4NN5hQToPWn3DP4dh1FnDz2F9a+P95PMlfzYeK8=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
