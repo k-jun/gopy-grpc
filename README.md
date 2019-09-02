@@ -33,15 +33,25 @@ Module化に伴い`XXXX_pb2_grpc`のimportを適宜修正
 ### 起動
 
 ```
-source ./env.sh && go run ./server/main.go 
-source ./env.sh && python3 ./ml/main.py
+cd server
+source ../env.sh && go run ./main.go
+
+cd ml
+source ../env.sh && python3 ./main.py
 ```
 
 ### TODO
 
+Should
+- 機械学習のコードを用意する。
+- Docker化してKubernetes試したい
+- GoRoutineを試したい
+
+Want
 - UNIXDomainソケットってどうなの？
 - TCPよりもっと良い接続方法は?
-- 機械学習のコードを用意する。
-- 環境変数を扱えるように
-- GoRoutineを試したい
+- STLで接続したい
+- ログをどうやって出す？
+- 負荷をかけて検証したい
+- 監視ツールを導入したい
 

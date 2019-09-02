@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  ml:
+    build: ./ml
+    ports:
+          - 50051:50051
+    environment:
+      GRPC_PORT: "50051"
+  server:
+    build: ./server
+    depends_on:
+      - ml
+    ports:
+      - 8080:8081
+    environment:
+      GRPC_PORT: "50051"
+      GRPC_HOST: "ml"
+      GO_PORT: "8081"
+  
