@@ -40,12 +40,20 @@ cd ml
 source ../env.sh && python3 ./main.py
 ```
 
+### Deploy
+
+```
+kubectl apply -f kubernetes/deploy.yaml --prune --all # update, create, or delete
+```
+
 ### TODO
 
 Should
 - 機械学習のコードを用意する。
 - Docker化してKubernetes試したい
-- GoRoutineを試したい
+- GoRoutineを試したい 
+- DeployをRolling Upgrade -> GreenBlueに変更する。 参考(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
+- 
 
 Want
 - UNIXDomainソケットってどうなの？

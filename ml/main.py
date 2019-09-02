@@ -6,6 +6,7 @@ import logging
 
 import grpc
 import protolib
+import socket
 
 ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -14,7 +15,9 @@ class RouteGuideServicer:
     def Predict(self, request, context):
         print(request)
         print(context)
-        return protolib.Response(irisType="how do i know with such little info")
+        host = socket.gethostname()
+        ip = socket.gethostbyname(host)
+        return protolib.Response(irisType=str("host: " + host + " ip: " + ip))
 
 
 def serve():
