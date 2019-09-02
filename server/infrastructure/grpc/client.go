@@ -2,7 +2,6 @@ package grpc
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	adtech "github.com/K-jun1221/ca-adtech-comp/server/protolib"
@@ -15,10 +14,10 @@ var Client adtech.AdTechClient
 func Initialize(serverAddr string) (func() error, error) {
 	var opts []grpc.DialOption
 	// TODO TLS試してみる...? Connection uses plain TCP, TLS also exists
+	// TODO ClientSideLBやる 参考(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
+	// TODO GoRoutineを使って並列に複数のモデルの結果を集める。
 	opts = append(opts, grpc.WithInsecure())
 	conn, err := grpc.Dial(serverAddr, opts...)
-
-	fmt.Println(conn, err)
 	if err != nil {
 		return nil, err
 	}
