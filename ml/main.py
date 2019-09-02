@@ -19,7 +19,7 @@ ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class RouteGuideServicer:
     def __init__(self):
         # In tensorflow 1.14.0, Got error: call initializer instance with the dtype argument instead of passing it to the constructor.
-        # Need tensorflow 2.0.0rc0 to avoid it.
+        # Need upgrade to tensorflow 2.0.0rc0 to avoid it.
         super().__init__()
         with open("./models/simple_nn.json", "r") as f:
             json_string = json.load(f)
