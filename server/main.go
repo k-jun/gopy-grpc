@@ -27,8 +27,10 @@ func main() {
 		grpcPort = os.Getenv("GRPC_PORT")
 	}
 
-	done, err := grpc.Initialize(grpcHost + ":" + grpcPort)
+	// TODO 環境変数化
+	done, done2, err := grpc.Initialize(grpcHost+":"+grpcPort, grpcHost+":"+grpcPort)
 	defer done()
+	defer done2()
 	if err != nil {
 		log.Fatalf("failed to access to grpc-server: %v", err)
 	}
