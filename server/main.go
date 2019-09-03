@@ -19,7 +19,7 @@ func main() {
 	}))
 
 	grpcHost := "127.0.0.1"
-	grpcPort := "50051"
+	grpcPort := "50052"
 	if os.Getenv("GRPC_HOST") != "" {
 		grpcHost = os.Getenv("GRPC_HOST")
 	}

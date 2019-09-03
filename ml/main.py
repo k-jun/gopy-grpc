@@ -38,16 +38,24 @@ class RouteGuideServicer:
         # Need upgrade to tensorflow 2.0.0rc0 to avoid it.
         super().__init__()
 
-        model_type = "nn"
+        self.model_type = "nn"
         if os.environ.get("MODEL_TYPE") != None:
-            model_type = os.environ.get("MODEL_TYPE")
+            self.model_type = os.environ.get("MODEL_TYPE")
 
-        if model_type == "nn":
+        if self.model_type == "nn":
             self.model = load_nn()
-        elif model_type == "svm":
+        elif self.model_type == "svm":
             self.model = load_svm()
         else:
             self.model = load_svm()
+
+    def certainPredict(self, input):
+        if self.model_type == "nn":
+            return np.argmax(self.model.predict(np.array([input])))
+        elif self.model_type == "svm":
+            return self.model.predict(np.array([input]))[0]
+        else:
+            return np.argmax(self.model.predict(np.array([input])))
 
     def Predict(self, request, context):
         input = [
@@ -56,7 +64,7 @@ class RouteGuideServicer:
             request.petalLength,
             request.petalWidth,
         ]
-        output = np.argmax(self.model.predict(np.array([input])))
+        output = self.certainPredict(input)
         labels = ["Iris-setosa", "Iris-versicolor", "Iris-virginica"]
 
         model_type = "nn"
@@ -65,7 +73,7 @@ class RouteGuideServicer:
 
         # host = socket.gethostname()
         # ip = socket.gethostbyname(host)
-        return protolib.Response(irisType=labels[output] + " / " + model_type)
+        return protolib.Response(irisType=labels[output] + "(" + self.model_type + ")")
 
 
 def serve():

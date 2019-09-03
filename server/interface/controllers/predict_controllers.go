@@ -10,11 +10,12 @@ import (
 )
 
 func PredictIris(c echo.Context) error {
+	// 6.7 2.5 5.8 1.8 -> Virginica
 	arg := &adtech.Request{
-		SepalLength: 4.8, // not 0.0
-		SepalWidth:  3.0, // not 0.0
-		PetalLength: 1.4, // not 0.0
-		PetalWidth:  0.1, // not 0.0
+		SepalLength: 6.7, // not 0.0
+		SepalWidth:  2.5, // not 0.0
+		PetalLength: 5.8, // not 0.0
+		PetalWidth:  1.8, // not 0.0
 	}
 	res, err := grpc.Predict(arg)
 
