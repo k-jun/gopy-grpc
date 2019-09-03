@@ -8,6 +8,7 @@ github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190902153036-c07cc9f4a7cb h1
 github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190902165703-6b360f2fea09 h1:F1dkjyyMPXOUHvsJE818zoJVXMJq4432sN996e2u7Sc=
 github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190902171937-dcc2a25f0793 h1:Mh/0w2F3TdkMemW8AvqDjK/zLM+D7esXJlDa+9Pj4F4=
 github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190903051620-1ac9dca4c2b6 h1:QxtwW35cMrBuEHPWNQI7Rezu0jmaO2DJjkEkvbL0Pg4=
+github.com/K-jun1221/ca-adtech-comp/server v0.0.0-20190903054933-62e8b12389c4 h1:jk3gvVo0xy3uKOy1lFngRdNOOqAZa42HJoyS8PZlZ6E=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

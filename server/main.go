@@ -19,7 +19,7 @@ func main() {
 	}))
 
 	grpcHost := "127.0.0.1"
-	grpcPort := "50052"
+	grpcPort := "50051"
 	if os.Getenv("GRPC_HOST") != "" {
 		grpcHost = os.Getenv("GRPC_HOST")
 	}
@@ -27,8 +27,17 @@ func main() {
 		grpcPort = os.Getenv("GRPC_PORT")
 	}
 
-	// TODO 環境変数化
-	done, done2, err := grpc.Initialize(grpcHost+":"+grpcPort, grpcHost+":"+grpcPort)
+	grpcHost2 := "127.0.0.1"
+	grpcPort2 := "50052"
+	if os.Getenv("GRPC_HOST2") != "" {
+		grpcHost2 = os.Getenv("GRPC_HOST2")
+	}
+	if os.Getenv("GRPC_PORT2") != "" {
+		grpcPort2 = os.Getenv("GRPC_PORT2")
+	}
+
+	// TODO 環境変数化 50052を
+	done, done2, err := grpc.Initialize(grpcHost+":"+grpcPort, grpcHost2+":"+grpcPort2)
 	defer done()
 	defer done2()
 	if err != nil {

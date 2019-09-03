@@ -14,7 +14,7 @@ func Initialize(serverAddr string, serverAddr2 string) (func() error, func() err
 	// TODO ClientSideLBやる 参考(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
 	// opts = append(opts, grpc.WithInsecure())
 	doneNn, err := initNn(serverAddr)
-	doneSvm, err := initSvm(serverAddr)
+	doneSvm, err := initSvm(serverAddr2)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -37,12 +37,20 @@ func Predict(params *adtech.Request) (*adtech.Response, error) {
 	close(chSvm)
 
 	// TODO２種類のエラーをうまく扱う
-	if resultNn.Err != nil {
+	itisType := ""
+	if resultNn.Err != nil && resultSvm.Err != nil {
 		return nil, resultNn.Err
 	}
+	if resultNn.Err != nil {
+		itisType += resultNn.Err.Error()
+	} else {
+		itisType += resultNn.Response.IrisType
+	}
 	if resultSvm.Err != nil {
-		return nil, resultSvm.Err
+		itisType += resultSvm.Err.Error()
+	} else {
+		itisType += resultSvm.Response.IrisType
 	}
 
-	return &adtech.Response{IrisType: resultNn.Response.IrisType + " / " + resultSvm.Response.IrisType}, nil
+	return &adtech.Response{IrisType: itisType}, nil
 }
