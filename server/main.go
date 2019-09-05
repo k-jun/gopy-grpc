@@ -35,8 +35,7 @@ func main() {
 	if os.Getenv("GRPC_PORT2") != "" {
 		grpcPort2 = os.Getenv("GRPC_PORT2")
 	}
-
-	// TODO 環境変数化 50052を
+	
 	done, done2, err := grpc.Initialize(grpcHost+":"+grpcPort, grpcHost2+":"+grpcPort2)
 	defer done()
 	defer done2()

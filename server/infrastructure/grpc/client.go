@@ -12,14 +12,12 @@ type grpcChan struct {
 func Initialize(serverAddr string, serverAddr2 string) (func() error, func() error, error) {
 	// TODO TLS試してみる...? Connection uses plain TCP, TLS also exists
 	// TODO ClientSideLBやる 参考(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
-	// opts = append(opts, grpc.WithInsecure())
 	doneNn, err := initNn(serverAddr)
 	doneSvm, err := initSvm(serverAddr2)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	// Client = adtech.NewAdTechClient(conn)
 	return doneNn, doneSvm, nil
 }
 
