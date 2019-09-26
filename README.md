@@ -1,4 +1,4 @@
-# gopy-grpc-server
+# gopy-grpc
 
 ## **Download**
 
