@@ -2,8 +2,8 @@ package main
 
 import (
 	"log"
-	"os"
 
+	"gopy-grpc-server/common"
 	"gopy-grpc-server/infrastructure/grpc"
 	"gopy-grpc-server/infrastructure/routers"
 
@@ -20,15 +20,13 @@ func main() {
 
 	done, err := grpc.Initialize()
 	defer done()
+
 	if err != nil {
 		log.Fatalf("failed to access to grpc-server: %v", err)
 	}
 
 	routers.IndexRouting(e)
 
-	port := "8080"
-	if os.Getenv("GO_PORT") != "" {
-		port = os.Getenv("GO_PORT")
-	}
+	port := common.GetEnv("GO_PORT", "8080")
 	e.Logger.Fatal(e.Start(":" + port))
 }
