@@ -1,29 +1,38 @@
 version: '3.7'
 services:
-  ml_svm:
+  ml_svm1:
     build: ./ml
     ports:
-          - 50051:50051
+      - 50051:50051
     environment:
       GRPC_PORT: "50051"
   ml_svm2:
     build: ./ml
     ports:
-          - 50052:50052
+      - 50052:50052
     environment:
       GRPC_PORT: "50052"
   server:
     build: ./server
     depends_on:
-      - ml_svm
+      - ml_svm1
       - ml_svm2
     ports:
       - 8080:8080
     environment:
-      GRPC_HOST: "ml_svm"
-      GRPC_PORT: "50051"
-      GRPC_HOST2: "ml_svm2"
-      GRPC_PORT2: "50052"
       GO_PORT: "8080"
+      GRPC_VOTING: "false"
+      GRPC_HOST_SINGLE: "ml_svm1"
+      GRPC_PORT_SINGLE: "50051"
+      GRPC_TYPE_SINGLE: "svm"
       
-  
+      GRPC_VOTING_AMMOUNT: "2"
+
+      GRPC_HOST_1: "ml_svm1"
+      GRPC_PORT_1: "50051"
+      GRPC_TYPE_1: "svm"
+
+      GRPC_HOST_2: "ml_svm2"
+      GRPC_PORT_2: "50052"
+      GRPC_TYPE_2: "svm"
+      

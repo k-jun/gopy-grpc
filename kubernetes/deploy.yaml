@@ -2,35 +2,90 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ca-adtech-comp-server
+  name: gopy-grpc
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
-      app: ca-adtech-comp-server
+      app: gopy-grpc
   template:
     metadata:
       labels:
-        app: ca-adtech-comp-server
+        app: gopy-grpc
     spec:
       containers:
-        - name: go-server
-          image: dockerkeijun/ca-adtech-comp-server
+        - name: golang-server
+          image: kjun1221/gopy-grpc-server:1.0.0
+          resources:
+            requests: # 下限
+              cpu: 50m
+              memory: 500Mi
+            limits: # 上限
+              cpu: 100m
+              memory: 500Mi
           ports:
             - containerPort: 8080
           env:
-            - name: GRPC_PORT
-              value: "50051"
-            - name: GRPC_HOST
-              value: "ca-adtech-comp-ml-lb" 
             - name: GO_PORT
               value: "8080"
+            - name: GRPC_VOTING
+              value: "true"
 
+            # - name: GRPC_HOST_SINGLE
+            #   value: "localhost"
+            # - name: GRPC_PORT_SINGLE
+            #   value: "8080"
+            # - name: GRPC_TYPE_SINGLE
+            #   value: "svm"
+
+            - name: GRPC_VOTING_AMMOUNT
+              value: "2"
+
+            - name: GRPC_HOST_1
+              value: "localhost"
+            - name: GRPC_PORT_1
+              value: "50051"
+            - name: GRPC_TYPE_1
+              value: "svm"
+            - name: GRPC_HOST_2
+              value: "localhost"
+            - name: GRPC_PORT_2
+              value: "50052"
+            - name: GRPC_TYPE_2
+              value: "svm"
+        - name: python-ml-1
+          image: kjun1221/gopy-grpc-ml:1.0.0
+          resources:
+            requests: # 下限
+              cpu: 0m
+              memory: 500Mi
+            limits: # 上限
+              cpu: 50m
+              memory: 500Mi
+          ports:
+            - containerPort: 50051
+          env:
+            - name: GRPC_PORT
+              value: "50051"
+        - name: python-ml-2
+          image: kjun1221/gopy-grpc-ml:1.0.0
+          resources:
+            requests: # 下限
+              cpu: 0m
+              memory: 500Mi
+            limits: # 上限
+              cpu: 50m
+              memory: 500Mi
+          ports:
+            - containerPort: 50052
+          env:
+            - name: GRPC_PORT
+              value: "50052"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ca-adtech-comp-server-lb
+  name: gopy-grpc-lb
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
@@ -41,46 +96,4 @@ spec:
       targetPort: 8080
       nodePort: 30081
   selector:
-    app: ca-adtech-comp-server
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ca-adtech-comp-ml
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: ca-adtech-comp-ml
-  template:
-    metadata:
-      labels:
-        app: ca-adtech-comp-ml
-    spec:
-      containers:
-        - name: python-ml
-          image: dockerkeijun/ca-adtech-comp-ml:1.0.2
-          ports:
-            - containerPort: 50051
-          env:
-            - name: GRPC_PORT
-              value: "50051"
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ca-adtech-comp-ml-lb
-spec:
-  # TODO Headless Serviceに変えたい
-  type: LoadBalancer
-  externalTrafficPolicy: Cluster
-  ports:
-    - name: "http-port"
-      protocol: "TCP"
-      port: 50051
-      targetPort: 50051
-      nodePort: 30082
-  selector:
-    app: ca-adtech-comp-ml
+    app: gopy-grpc

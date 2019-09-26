@@ -11,20 +11,32 @@ import (
 
 var clientSvm proto.ProtoClient
 
-func initSvm(serverAddr string) (func() error, error) {
+type SVM struct {
+	Conn *grpc.ClientConn
+}
+
+func newSvm(serverAddr string) (func() error, ML, error) {
 	var opts []grpc.DialOption
 	opts = append(opts, grpc.WithInsecure())
 	conn, err := grpc.Dial(serverAddr, opts...)
+	ml := &SVM{Conn: conn}
 	if err != nil {
-		return nil, err
+		return nil, ml, err
 	}
 	clientSvm = proto.NewProtoClient(conn)
-	return conn.Close, nil
+	return conn.Close, ml, nil
 }
 
-func predictSvm(params *proto.Request, ch chan grpcChan) {
+func (ml *SVM) Predict(params *proto.Request) (*proto.Response, error) {
+	// TODO LoadBalanchingする場合(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
+	// resolver, _ := naming.NewDNSResolverWithFreq(1 * time.Second)
+	// balancer := grpc.RoundRobin(resolver)
+	// conn, _ := grpc.DialContext(context.Background(), grpcHost,
+	// grpc.WithInsecure(),
+	// grpc.WithBalancer(balancer))
+
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	response, err := clientSvm.Predict(ctx, params)
-	ch <- grpcChan{Response: response, Err: err}
+	return response, err
 }
