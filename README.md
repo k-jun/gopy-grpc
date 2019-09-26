@@ -1,4 +1,4 @@
-# ca-adtech-comp
+# gopy-grpc-server
 
 ### SETUP
 
