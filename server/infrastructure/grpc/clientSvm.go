@@ -4,11 +4,12 @@ import (
 	"context"
 	"time"
 
-	adtech "github.com/K-jun1221/ca-adtech-comp/server/protolib"
+	proto "gopy-grpc-server/protolib"
+
 	"google.golang.org/grpc"
 )
 
-var clientSvm adtech.AdTechClient
+var clientSvm proto.ProtoClient
 
 func initSvm(serverAddr string) (func() error, error) {
 	var opts []grpc.DialOption
@@ -17,11 +18,11 @@ func initSvm(serverAddr string) (func() error, error) {
 	if err != nil {
 		return nil, err
 	}
-	clientSvm = adtech.NewAdTechClient(conn)
+	clientSvm = proto.NewProtoClient(conn)
 	return conn.Close, nil
 }
 
-func predictSvm(params *adtech.Request, ch chan grpcChan) {
+func predictSvm(params *proto.Request, ch chan grpcChan) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	response, err := clientSvm.Predict(ctx, params)
