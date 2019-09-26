@@ -19,10 +19,10 @@ spec:
           resources:
             requests: # 下限
               cpu: 50m
-              memory: 500Mi
+              memory: 100Mi
             limits: # 上限
               cpu: 100m
-              memory: 500Mi
+              memory: 100Mi
           ports:
             - containerPort: 8080
           env:
@@ -58,10 +58,10 @@ spec:
           resources:
             requests: # 下限
               cpu: 0m
-              memory: 500Mi
+              memory: 100Mi
             limits: # 上限
               cpu: 50m
-              memory: 500Mi
+              memory: 100Mi
           ports:
             - containerPort: 50051
           env:
@@ -72,10 +72,10 @@ spec:
           resources:
             requests: # 下限
               cpu: 0m
-              memory: 500Mi
+              memory: 100Mi
             limits: # 上限
               cpu: 50m
-              memory: 500Mi
+              memory: 100Mi
           ports:
             - containerPort: 50052
           env:
