@@ -1,8 +1,8 @@
 
 .vscode
-.adtech
+.proto
 
-/ml/protolib/adtech_*
+/ml/protolib/proto_*
 /ml/protolib/__pycache__
 /server/protolib/
 

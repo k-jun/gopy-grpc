@@ -1,2 +1,2 @@
-from protolib.adtech_pb2 import *
-from protolib.adtech_pb2_grpc import *
+from protolib.proto_pb2 import *
+from protolib.proto_pb2_grpc import *

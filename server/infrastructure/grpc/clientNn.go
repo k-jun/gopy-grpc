@@ -4,12 +4,12 @@ import (
 	"context"
 	"time"
 
-	adtech "github.com/K-jun1221/ca-adtech-comp/server/protolib"
+	proto "gopy-grpc-server/protolib"
 
 	"google.golang.org/grpc"
 )
 
-var clientNn adtech.AdTechClient
+var clientNn proto.ProtoClient
 
 func initNn(serverAddr string) (func() error, error) {
 	var opts []grpc.DialOption
@@ -18,11 +18,11 @@ func initNn(serverAddr string) (func() error, error) {
 	if err != nil {
 		return nil, err
 	}
-	clientNn = adtech.NewAdTechClient(conn)
+	clientNn = proto.NewProtoClient(conn)
 	return conn.Close, nil
 }
 
-func predictNn(params *adtech.Request, ch chan grpcChan) {
+func predictNn(params *proto.Request, ch chan grpcChan) {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	response, err := clientNn.Predict(ctx, params)

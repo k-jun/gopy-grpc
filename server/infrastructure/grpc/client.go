@@ -1,11 +1,11 @@
 package grpc
 
 import (
-	adtech "github.com/K-jun1221/ca-adtech-comp/server/protolib"
+	proto "gopy-grpc-server/protolib"
 )
 
 type grpcChan struct {
-	Response *adtech.Response
+	Response *proto.Response
 	Err      error
 }
 
@@ -21,7 +21,7 @@ func Initialize(serverAddr string, serverAddr2 string) (func() error, func() err
 	return doneNn, doneSvm, nil
 }
 
-func Predict(params *adtech.Request) (*adtech.Response, error) {
+func Predict(params *proto.Request) (*proto.Response, error) {
 
 	chNn := make(chan grpcChan)
 	chSvm := make(chan grpcChan)
@@ -50,5 +50,5 @@ func Predict(params *adtech.Request) (*adtech.Response, error) {
 		itisType += resultSvm.Response.IrisType
 	}
 
-	return &adtech.Response{IrisType: itisType}, nil
+	return &proto.Response{IrisType: itisType}, nil
 }

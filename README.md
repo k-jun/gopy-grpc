@@ -1,63 +1,53 @@
 # gopy-grpc-server
 
-### SETUP
+## **Download**
 
 ```sh
-https://github.com/K-jun1221/ca-adtech-comp.git
-cd ca-adtech-comp
+git clone https://github.com/K-jun1221/gopy-grpc-server.git
+cd gopy-grpc-server
 ```
 
-gRPCを使っているのでまず、gRPCが入っていないと話に
-ならない。実行テストがしたいので、できればPythonの方だけでも入れて欲しい。
+## **ProtocolBuffer**
 
 ```sh
 # golang
 go get -u google.golang.org/grpc
 go get -u github.com/golang/protobuf/protoc-gen-go
 
+# `proto.pb.go`を生成
+mkdir ./server/protolib
+protoc -I protos/ --go_out=plugins=grpc:./server/protolib protos/proto.proto
+
 # python
 python -m pip install --upgrade pip
 python -m pip install grpcio
 python -m pip install grpcio-tools
 
-```
+# `proto_pb2.py`と`proto_pb2_grpc.py`を生成
+python -m grpc_tools.protoc -I./protos --python_out=./ml/protolib --grpc_python_out=./ml/protolib ./protos/proto.proto
 
-
-Python参考: https://grpc.io/docs/quickstart/python/
-
-Golang参考: https://grpc.io/docs/quickstart/go/
-
-### ProtoLibを作成
-protoファイルにしたがって自動生成されるファイルはGitIgnoreしてある。以下のコマンドでそれぞれのgRPC用ライブラリを作成する。
-
-```sh
-# `adtech.pb.go`を生成
-mkdir ./server/protolib
-protoc -I protos/ --go_out=plugins=grpc:./server/protolib protos/adtech.proto
-```
-```sh
-# `adtech_pb2.py`と`adtech_pb2_grpc.py`を生成
-python -m grpc_tools.protoc -I./protos --python_out=./ml/protolib --grpc_python_out=./ml/protolib ./protos/adtech.proto
 ```
 
 #### ※Pythonは注意が必要
 
-Module化に伴い`/ml/protolib/adtech_pb2_grpc.py`のimportを適宜修正
+Module化に伴い`/ml/protolib/proto_pb2_grpc.py`のimportを適宜修正
 
 **変更前**
 ```python
-import adtech_pb2 as adtech__pb2
+import proto_pb2 as proto__pb2
 ```
 **変更後**
 ```python
-import protolib.adtech_pb2 as adtech__pb2
+import protolib.proto_pb2 as proto__pb2
 ```
 
+- Python参考: https://grpc.io/docs/quickstart/python/
+- Golang参考: https://grpc.io/docs/quickstart/go/
 
 
-### 起動
+## **Activate**
 
-環境変数は`/env.sh`を適宜いじる。
+環境変数は`./env.sh`を適宜いじる。
 
 ```sh
 # golang
@@ -69,6 +59,7 @@ cd ml
 source ../env.sh && python3 ./main.py
 ```
 
+<!-- TODO 修正する -->
 ### Deploy
 
 ```sh
@@ -83,21 +74,4 @@ gcloud container clusters get-credentials k8s --zone asia-northeast1-a
 ```
 kubectl apply -f kubernetes/deploy.yaml --prune --all # update, create, or delete
 ```
-
-### TODO
-
-Should
-- 機械学習のコードを用意する。
-- Docker化してKubernetes試したい
-- GoRoutineを試したい 
-- DeployをRolling Upgrade -> GreenBlueに変更する。 参考(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
-- 
-
-Want
-- UNIXDomainソケットってどうなの？
-- TCPよりもっと良い接続方法は?
-- STLで接続したい
-- ログをどうやって出す？
-- 負荷をかけて検証したい
-- 監視ツールを導入したい
 

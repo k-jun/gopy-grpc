@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/K-jun1221/ca-adtech-comp/server/infrastructure/grpc"
-	"github.com/K-jun1221/ca-adtech-comp/server/infrastructure/routers"
+	"gopy-grpc-server/infrastructure/grpc"
+	"gopy-grpc-server/infrastructure/routers"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -35,7 +35,7 @@ func main() {
 	if os.Getenv("GRPC_PORT2") != "" {
 		grpcPort2 = os.Getenv("GRPC_PORT2")
 	}
-	
+
 	done, done2, err := grpc.Initialize(grpcHost+":"+grpcPort, grpcHost2+":"+grpcPort2)
 	defer done()
 	defer done2()
@@ -44,7 +44,6 @@ func main() {
 	}
 
 	routers.IndexRouting(e)
-	routers.PredictRouting(e.Group("/predict"))
 
 	port := "8080"
 	if os.Getenv("GO_PORT") != "" {

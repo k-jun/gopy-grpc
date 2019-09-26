@@ -1,11 +1,12 @@
 package routers
 
 import (
-	"github.com/K-jun1221/ca-adtech-comp/server/interface/controllers"
+	"gopy-grpc-server/interface/controllers"
 
 	"github.com/labstack/echo"
 )
 
 func IndexRouting(e *echo.Echo) {
 	e.GET("/", controllers.HelloEcho)
+	e.GET("/predict", controllers.PredictIris)
 }
