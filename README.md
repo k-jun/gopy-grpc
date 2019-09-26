@@ -59,19 +59,24 @@ cd ml
 source ../env.sh && python3 ./main.py
 ```
 
-<!-- TODO 修正する -->
-### Deploy
+## **Deploy**
 
 ```sh
-# kubernetesのversionを確認して起動
-gcloud container get-server-config --zone asia-northeast1-a
-gcloud container clusters create k8s --cluster-version 1.13.7-gke.8 --zone asia-northeast1-a --num-nodes 3
-
-# kubernetesのCredentialを~/.kube/configに保存
-gcloud container clusters get-credentials k8s --zone asia-northeast1-a
+gcloud container clusters create k8s --cluster-version 1.13.7-gke.8 --zone asia-northeast1-a --num-nodes 3 --project XXX
+gcloud container clusters get-credentials k8s --zone asia-northeast1-a # kubernetesのCredentialを~/.kube/configに保存
 ```
 
-```
+### kubectl
+```sh
 kubectl apply -f kubernetes/deploy.yaml --prune --all # update, create, or delete
+
+watch kubectl get pods # watching pods
+watch kubectl top pods # used pod resources
+watch kubectl get nodes # watching nodes
+watch kubectl top nodes # used node resources
+
+kubectl describe node [node_name]  # check node resource usage
+
+kubectl delete -f kubernetes/deploy.yaml # delete all
 ```
 

@@ -28,6 +28,13 @@ func newSvm(serverAddr string) (func() error, ML, error) {
 }
 
 func (ml *SVM) Predict(params *proto.Request) (*proto.Response, error) {
+	// TODO LoadBalanchingする場合(https://deeeet.com/writing/2018/03/30/kubernetes-grpc/)
+	// resolver, _ := naming.NewDNSResolverWithFreq(1 * time.Second)
+	// balancer := grpc.RoundRobin(resolver)
+	// conn, _ := grpc.DialContext(context.Background(), grpcHost,
+	// grpc.WithInsecure(),
+	// grpc.WithBalancer(balancer))
+
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	response, err := clientSvm.Predict(ctx, params)
