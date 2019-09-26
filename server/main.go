@@ -18,27 +18,8 @@ func main() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
-	grpcHost := "127.0.0.1"
-	grpcPort := "50051"
-	if os.Getenv("GRPC_HOST") != "" {
-		grpcHost = os.Getenv("GRPC_HOST")
-	}
-	if os.Getenv("GRPC_PORT") != "" {
-		grpcPort = os.Getenv("GRPC_PORT")
-	}
-
-	grpcHost2 := "127.0.0.1"
-	grpcPort2 := "50052"
-	if os.Getenv("GRPC_HOST2") != "" {
-		grpcHost2 = os.Getenv("GRPC_HOST2")
-	}
-	if os.Getenv("GRPC_PORT2") != "" {
-		grpcPort2 = os.Getenv("GRPC_PORT2")
-	}
-
-	done, done2, err := grpc.Initialize(grpcHost+":"+grpcPort, grpcHost2+":"+grpcPort2)
+	done, err := grpc.Initialize()
 	defer done()
-	defer done2()
 	if err != nil {
 		log.Fatalf("failed to access to grpc-server: %v", err)
 	}
